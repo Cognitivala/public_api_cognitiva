@@ -1,0 +1,179 @@
+openapi: 3.0.0
+info:
+  title: API Asistente - Cognitiva
+  version: '0.1'
+  description: "Esta documentación hace referencia a API's que son utilizadas por clientes para integrarse con Cognitiva para hacer uso del Asistente Cognitivo.\nLa referencia aquí expuesta es para clientes que cuentan con una API entregada por Cognitiva para el uso de las API's . \n"
+  contact:
+    name: Soporte Chile
+    url: 'https://cognitivacl.zendesk.com/'
+    email: soporte_chile@cognitiva.la
+servers:
+  - url: 'https://ambiente-cliente.mycognitiva.io/mad'
+paths:
+  /external_message:
+    parameters: []
+    post:
+      summary: Recibe desde integrción WhatsApp
+      description: Recibe mensaje desde integración WhatsApp para ser respondido por Asistente Cognitivo.
+      security:
+        - API Key: []
+      requestBody: {}
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: id_message
+          description: |
+            ID de mensaje.
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: from_message
+          description: |
+            Número o correo del emisor.
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: to_message
+          description: |
+            Número o correo del receptor.
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: body_message
+          description: |
+            Cuerpo del mensaje.
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: datetime
+          description: |
+            Marca de tiempo del evento.
+      responses:
+        '200':
+          description: |
+            Respuesta estándar cuando un mensaje es recibido y entregado a asistente Cognitivo.
+          headers:
+            Response:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    items: {}
+                  general:
+                    type: object
+                    properties:
+                      cid:
+                        type: string
+                      id_cliente:
+                        type: string
+              examples:
+                Ejemplo Request:
+                  value:
+                    cid: null
+                    id_cliente: '1'
+                    location: ''
+                    msg: 'Hola, estoy resfriado, necesito ayuda, qué me recomiendas?'
+                    token: ''
+                Ejemplo Response:
+                  value:
+                    estado:
+                      codigoEstado: 200
+                      glosaEstado: chitchat response
+                    general:
+                      cid: abc72f38-c17c-4933-b7b9-b76f208cxvx5
+                      region: ''
+                      tipo: chitchat
+                    msg:
+                      - '¡Hola! Ok, para saber cómo ayudarte, antes necesito saber de tus sintomas.'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+              examples:
+                Ejemplo:
+                  value:
+                    response: 'Request con error. '
+        '401':
+          description: Unauthorized
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+              examples:
+                Response:
+                  value:
+                    response: 'No autorizado para la request. '
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+              examples:
+                Response:
+                  value:
+                    response: 'Request no encontrado. '
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+              examples:
+                Response:
+                  value:
+                    response: 'Error en el servidor. '
+        '':
+          description: El response del Asistente Cognitivo será usando el dominio entrenada para el request.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    msg:
+                      type: string
+                    general:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          cid:
+                            type: string
+                          id_cliente:
+                            type: string
+      operationId: id_external_message
+components:
+  schemas: {}
+  securitySchemes:
+    API Key:
+      name: API Key
+      type: apiKey
+      in: query
+      description: API Key proporcionada por Cognitiva para hacer uso de los endpoints públicos.
