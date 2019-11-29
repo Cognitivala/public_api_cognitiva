@@ -94,13 +94,43 @@ paths:
                   value:
                     estado:
                       codigoEstado: 200
-                      glosaEstado: chitchat response
+                      glosaEstado: ok
                     general:
-                      cid: abc72f38-c17c-4933-b7b9-b76f208cxvx5
-                      region: ''
-                      tipo: chitchat
+                      cid: ad145638-c22c-4963-b7b9-b7cxvebb5
+                      nodo_id:
+                        _node_output_map:
+                          Bienvenido:
+                            '0':
+                              - 2
+                          En otras cosas:
+                            '0':
+                              - 0
+                          node_2_156536dsd18903:
+                            '0':
+                              - 0
+                          node_3_1565288531030:
+                            '0':
+                              - 0
+                          node_6_1567700307757:
+                            '0':
+                              - 0
+                          node_8_1565209978082:
+                            '0':
+                              - 0
+                          response_8_1567700728787:
+                            '0':
+                              - 0
+                        branch_exited: true
+                        branch_exited_reason: completed
+                        dialog_request_counter: 8
+                        dialog_stack:
+                          - dialog_node: root
+                        dialog_turn_counter: 8
+                        initialized: true
+                      tipo: ''
+                    like: false
                     msg:
-                      - '¡Hola! Ok, para saber cómo ayudarte, antes necesito saber de tus síntomas.'
+                      - 'Ok, pero antes debo hacerte algunas preguntas. '
         '400':
           description: Bad Request
           content:
@@ -193,4 +223,3 @@ components:
       type: apiKey
       in: query
       description: API Key proporcionada por Cognitiva para hacer uso de los endpoints públicos.
-
