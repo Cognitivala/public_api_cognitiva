@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: API Asistente - Cognitiva
-  version: '0.1'
+  version: '1.0'
   description: "Esta documentación hace referencia a API's que son utilizadas por clientes para integrarse con Cognitiva para hacer uso del Asistente Cognitivo.\nLa referencia aquí expuesta es para clientes que cuentan con una API Key entregada por Cognitiva para el uso de las API's . \n"
   contact:
     name: Soporte Chile
@@ -74,7 +74,7 @@ paths:
                     type: object
                     properties:
                       codigoEstado:
-                        type: number
+                        type: string
                       glosaEstado:
                         type: string
                   general:
@@ -82,13 +82,43 @@ paths:
                     properties:
                       cid:
                         type: string
-                      region:
-                        type: string
-                      tipo:
-                        type: string
+                      nodo_id:
+                        type: object
+                        properties:
+                          _node_output_map:
+                            type: object
+                            properties:
+                              Bienvenido:
+                                type: object
+                              En otras cosas:
+                                type: object
+                              node_id_number:
+                                type: object
+                              response_id_number:
+                                type: object
+                          branch_exited:
+                            type: boolean
+                          branch_exited_reason:
+                            type: string
+                          dialog_request_counter:
+                            type: string
+                          dialog_stack:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                dialog_node:
+                                  type: string
+                          dialog_turn_counter:
+                            type: number
+                          initialized:
+                            type: boolean
+                  like:
+                    type: boolean
                   msg:
                     type: array
-                    items: {}
+                    items:
+                      type: string
               examples:
                 Ejemplo:
                   value:
@@ -189,37 +219,14 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    msg:
-                      type: array
-                      items: {}
-                    general:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          cid:
-                            type: string
-                          region:
-                            type: string
-                          tipo:
-                            type: string
-                    estado:
-                      type: object
-                      properties:
-                        codigoEstado:
-                          type: number
-                        glosaEstado:
-                          type: string
+                type: object
+                properties: {}
       operationId: Enviar mensaje a Asistente
 components:
-  schemas: {}
   securitySchemes:
     API Key:
       name: API Key
       type: apiKey
       in: query
       description: API Key proporcionada por Cognitiva para hacer uso de los endpoints públicos.
+
