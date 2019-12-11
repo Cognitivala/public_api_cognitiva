@@ -29,27 +29,18 @@ paths:
                 id_cliente:
                   type: string
                   description: ID de cliente.
-                location:
-                  type: string
-                  description: En desuso
-                from_message:
-                  type: string
-                  description: Teléfono / correo / usuario emisor de mensaje.
-                to_message:
-                  type: string
-                  description: Teléfono / correo / usuario receptor de mensaje.
-                body_message:
+                msg:
                   type: string
                   description: Texto que será entregado a Asistente Cognitivo.
-                datetime:
+                token:
                   type: string
                   description: Marca de tiempo para fines estadísticos.
+                tipo_canal:
+                  type: integer
               required:
                 - cid
-                - id_cliente
-                - from_message
-                - to_message
-                - body_message
+                - msg
+                - tipo_canal
             examples:
               Ejemplo:
                 value:
@@ -58,7 +49,22 @@ paths:
                   location: ''
                   msg: 'Hola, estoy resfriado, necesito ayuda, qué me recomiendas?'
                   token: ''
-        description: Parámetros necesarios para derivar mensaje a Asistente.
+                  tipo_canal: 4
+        description: |
+          Parámetros necesarios para derivar mensaje a Asistente.
+          Para tipo_canal usar los siguientes valores enteros.
+
+          **Tipo de canal**
+
+
+          | id | Tipo canal  |
+          |---|---|
+          | 1  | Web  |
+          | 2  | Facebook  |
+          | 3  | Teams  |
+          | 4 |  WhatsApp |
+          |  5 |Mobile   |
+          |  6 |Voz|
       parameters: []
       responses:
         '200':
@@ -90,16 +96,10 @@ paths:
                             properties:
                               Bienvenido:
                                 type: object
-                              En otras cosas:
-                                type: object
                               node_id_number:
                                 type: object
                               response_id_number:
                                 type: object
-                          branch_exited:
-                            type: boolean
-                          branch_exited_reason:
-                            type: string
                           dialog_request_counter:
                             type: string
                           dialog_stack:
@@ -113,54 +113,93 @@ paths:
                             type: number
                           initialized:
                             type: boolean
+                    required:
+                      - cid
                   like:
                     type: boolean
                   msg:
                     type: array
                     items:
                       type: string
+                  buttons:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        value:
+                          type: string
+                required:
+                  - msg
               examples:
-                Ejemplo:
+                Respuesta con canal:
+                  value:
+                    buttons:
+                      - title: Productos Personas
+                        value: Productos Personas
+                      - title: Productos Empresas
+                        value: Productos Empresas
+                    estado:
+                      codigoEstado: 200
+                      glosaEstado: ok
+                    general:
+                      cid: f376fc93-0ea5-48de-b24c-d2b6632872d1
+                      nodo_id:
+                        _node_output_map:
+                          Bienvenido:
+                            '0':
+                              - 0
+                          node_4_1575298698266:
+                            '0':
+                              - 0
+                        dialog_request_counter: 2
+                        dialog_stack:
+                          - dialog_node: node_4_1575298698266
+                        dialog_turn_counter: 2
+                        initialized: true
+                      tipo: ''
+                    like: false
+                    msg:
+                      - 'Tenemos productos para personas y empresas. Elige una categoría para ver productos asociados: '
+                Canal con KillSwitch:
                   value:
                     estado:
                       codigoEstado: 200
                       glosaEstado: ok
                     general:
-                      cid: ad145638-c22c-4963-b7b9-b7cxvebb5
+                      cid: null
+                      nodo_id: null
+                      tipo: null
+                    like: null
+                    msg:
+                      - 'Actualmente estamos generando una actualización en nuestro asistente, por favor intente más tarde.'
+                Respuesta Genérica:
+                  value:
+                    estado:
+                      codigoEstado: 200
+                      glosaEstado: ok
+                    general:
+                      cid: fc778565-a69c-40bc-83ca-c476a6951aee
                       nodo_id:
                         _node_output_map:
                           Bienvenido:
                             '0':
-                              - 2
-                          En otras cosas:
-                            '0':
                               - 0
-                          node_2_156536dsd18903:
-                            '0':
-                              - 0
-                          node_3_1565288531030:
-                            '0':
-                              - 0
-                          node_6_1567700307757:
-                            '0':
-                              - 0
-                          node_8_1565209978082:
-                            '0':
-                              - 0
-                          response_8_1567700728787:
+                          node_2_1576093773307:
                             '0':
                               - 0
                         branch_exited: true
                         branch_exited_reason: completed
-                        dialog_request_counter: 8
+                        dialog_request_counter: 2
                         dialog_stack:
                           - dialog_node: root
-                        dialog_turn_counter: 8
+                        dialog_turn_counter: 2
                         initialized: true
                       tipo: ''
                     like: false
                     msg:
-                      - 'Ok, pero antes debo hacerte algunas preguntas. '
+                      - respuesta WEB
         '400':
           description: Bad Request
           content:
@@ -173,7 +212,10 @@ paths:
               examples:
                 Ejemplo:
                   value:
-                    response: 'Request con error. '
+                    estado:
+                      codigoEstado: 400
+                      glosaEstado: Error en el tipo de dato canal
+                    respuesta: null
         '401':
           description: Unauthorized
           headers: {}

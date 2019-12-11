@@ -1637,7 +1637,8 @@ p JSON.parse(result)
   <span class="hljs-attr">"id_cliente"</span>: <span class="hljs-string">"1"</span>,
   <span class="hljs-attr">"location"</span>: <span class="hljs-string">""</span>,
   <span class="hljs-attr">"msg"</span>: <span class="hljs-string">"Hola, estoy resfriado, necesito ayuda, qué me recomiendas?"</span>,
-  <span class="hljs-attr">"token"</span>: <span class="hljs-string">""</span>
+  <span class="hljs-attr">"token"</span>: <span class="hljs-string">""</span>,
+  <span class="hljs-attr">"tipo_canal"</span>: <span class="hljs-number">4</span>
 }
 </code></pre>
 <h3 id="enviar-mensaje-a-asistente-parameters">Parameters</h3>
@@ -1670,43 +1671,67 @@ p JSON.parse(result)
 <td>» id_cliente</td>
 <td>body</td>
 <td>string</td>
-<td>true</td>
+<td>false</td>
 <td>ID de cliente.</td>
 </tr>
 <tr>
-<td>» location</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>En desuso</td>
-</tr>
-<tr>
-<td>» from_message</td>
-<td>body</td>
-<td>string</td>
-<td>true</td>
-<td>Teléfono / correo / usuario emisor de mensaje.</td>
-</tr>
-<tr>
-<td>» to_message</td>
-<td>body</td>
-<td>string</td>
-<td>true</td>
-<td>Teléfono / correo / usuario receptor de mensaje.</td>
-</tr>
-<tr>
-<td>» body_message</td>
+<td>» msg</td>
 <td>body</td>
 <td>string</td>
 <td>true</td>
 <td>Texto que será entregado a Asistente Cognitivo.</td>
 </tr>
 <tr>
-<td>» datetime</td>
+<td>» token</td>
 <td>body</td>
 <td>string</td>
 <td>false</td>
 <td>Marca de tiempo para fines estadísticos.</td>
+</tr>
+<tr>
+<td>» tipo_canal</td>
+<td>body</td>
+<td>integer</td>
+<td>true</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<h4 id="detailed-descriptions">Detailed descriptions</h4>
+<p><strong>body</strong>: Parámetros necesarios para derivar mensaje a Asistente.
+Para tipo_canal usar los siguientes valores enteros.</p>
+<p><strong>Tipo de canal</strong></p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>Tipo canal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Web</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Facebook</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Teams</td>
+</tr>
+<tr>
+<td>4</td>
+<td>WhatsApp</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Mobile</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Voz</td>
 </tr>
 </tbody>
 </table>
@@ -1717,45 +1742,83 @@ p JSON.parse(result)
 <p>Respuesta estándar cuando un mensaje es recibido y entregado a asistente Cognitivo.</p>
 </blockquote>
 <pre class="highlight tab tab-json"><code>{
+  <span class="hljs-attr">"buttons"</span>: [
+    {
+      <span class="hljs-attr">"title"</span>: <span class="hljs-string">"Productos Personas"</span>,
+      <span class="hljs-attr">"value"</span>: <span class="hljs-string">"Productos Personas"</span>
+    },
+    {
+      <span class="hljs-attr">"title"</span>: <span class="hljs-string">"Productos Empresas"</span>,
+      <span class="hljs-attr">"value"</span>: <span class="hljs-string">"Productos Empresas"</span>
+    }
+  ],
   <span class="hljs-attr">"estado"</span>: {
     <span class="hljs-attr">"codigoEstado"</span>: <span class="hljs-number">200</span>,
     <span class="hljs-attr">"glosaEstado"</span>: <span class="hljs-string">"ok"</span>
   },
   <span class="hljs-attr">"general"</span>: {
-    <span class="hljs-attr">"cid"</span>: <span class="hljs-string">"ad145638-c22c-4963-b7b9-b7cxvebb5"</span>,
+    <span class="hljs-attr">"cid"</span>: <span class="hljs-string">"f376fc93-0ea5-48de-b24c-d2b6632872d1"</span>,
     <span class="hljs-attr">"nodo_id"</span>: {
       <span class="hljs-attr">"_node_output_map"</span>: {
         <span class="hljs-attr">"Bienvenido"</span>: {
           <span class="hljs-attr">"0"</span>: [
-            <span class="hljs-number">2</span>
+            <span class="hljs-number">0</span>
           ]
         },
-        <span class="hljs-attr">"En otras cosas"</span>: {
+        <span class="hljs-attr">"node_4_1575298698266"</span>: {
+          <span class="hljs-attr">"0"</span>: [
+            <span class="hljs-number">0</span>
+          ]
+        }
+      },
+      <span class="hljs-attr">"dialog_request_counter"</span>: <span class="hljs-number">2</span>,
+      <span class="hljs-attr">"dialog_stack"</span>: [
+        {
+          <span class="hljs-attr">"dialog_node"</span>: <span class="hljs-string">"node_4_1575298698266"</span>
+        }
+      ],
+      <span class="hljs-attr">"dialog_turn_counter"</span>: <span class="hljs-number">2</span>,
+      <span class="hljs-attr">"initialized"</span>: <span class="hljs-literal">true</span>
+    },
+    <span class="hljs-attr">"tipo"</span>: <span class="hljs-string">""</span>
+  },
+  <span class="hljs-attr">"like"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">"msg"</span>: [
+    <span class="hljs-string">"Tenemos productos para personas y empresas. Elige una categoría para ver productos asociados: "</span>
+  ]
+}
+</code></pre>
+<pre class="highlight tab tab-json"><code>{
+  <span class="hljs-attr">"estado"</span>: {
+    <span class="hljs-attr">"codigoEstado"</span>: <span class="hljs-number">200</span>,
+    <span class="hljs-attr">"glosaEstado"</span>: <span class="hljs-string">"ok"</span>
+  },
+  <span class="hljs-attr">"general"</span>: {
+    <span class="hljs-attr">"cid"</span>: <span class="hljs-literal">null</span>,
+    <span class="hljs-attr">"nodo_id"</span>: <span class="hljs-literal">null</span>,
+    <span class="hljs-attr">"tipo"</span>: <span class="hljs-literal">null</span>
+  },
+  <span class="hljs-attr">"like"</span>: <span class="hljs-literal">null</span>,
+  <span class="hljs-attr">"msg"</span>: [
+    <span class="hljs-string">"Actualmente estamos generando una actualización en nuestro asistente, por favor intente más tarde."</span>
+  ]
+}
+</code></pre>
+<pre class="highlight tab tab-json"><code>{
+  <span class="hljs-attr">"estado"</span>: {
+    <span class="hljs-attr">"codigoEstado"</span>: <span class="hljs-number">200</span>,
+    <span class="hljs-attr">"glosaEstado"</span>: <span class="hljs-string">"ok"</span>
+  },
+  <span class="hljs-attr">"general"</span>: {
+    <span class="hljs-attr">"cid"</span>: <span class="hljs-string">"fc778565-a69c-40bc-83ca-c476a6951aee"</span>,
+    <span class="hljs-attr">"nodo_id"</span>: {
+      <span class="hljs-attr">"_node_output_map"</span>: {
+        <span class="hljs-attr">"Bienvenido"</span>: {
           <span class="hljs-attr">"0"</span>: [
             <span class="hljs-number">0</span>
           ]
         },
-        <span class="hljs-attr">"node_2_156536dsd18903"</span>: {
-          <span class="hljs-attr">"0"</span>: [
-            <span class="hljs-number">0</span>
-          ]
-        },
-        <span class="hljs-attr">"node_3_1565288531030"</span>: {
-          <span class="hljs-attr">"0"</span>: [
-            <span class="hljs-number">0</span>
-          ]
-        },
-        <span class="hljs-attr">"node_6_1567700307757"</span>: {
-          <span class="hljs-attr">"0"</span>: [
-            <span class="hljs-number">0</span>
-          ]
-        },
-        <span class="hljs-attr">"node_8_1565209978082"</span>: {
-          <span class="hljs-attr">"0"</span>: [
-            <span class="hljs-number">0</span>
-          ]
-        },
-        <span class="hljs-attr">"response_8_1567700728787"</span>: {
+        <span class="hljs-attr">"node_2_1576093773307"</span>: {
           <span class="hljs-attr">"0"</span>: [
             <span class="hljs-number">0</span>
           ]
@@ -1763,20 +1826,20 @@ p JSON.parse(result)
       },
       <span class="hljs-attr">"branch_exited"</span>: <span class="hljs-literal">true</span>,
       <span class="hljs-attr">"branch_exited_reason"</span>: <span class="hljs-string">"completed"</span>,
-      <span class="hljs-attr">"dialog_request_counter"</span>: <span class="hljs-number">8</span>,
+      <span class="hljs-attr">"dialog_request_counter"</span>: <span class="hljs-number">2</span>,
       <span class="hljs-attr">"dialog_stack"</span>: [
         {
           <span class="hljs-attr">"dialog_node"</span>: <span class="hljs-string">"root"</span>
         }
       ],
-      <span class="hljs-attr">"dialog_turn_counter"</span>: <span class="hljs-number">8</span>,
+      <span class="hljs-attr">"dialog_turn_counter"</span>: <span class="hljs-number">2</span>,
       <span class="hljs-attr">"initialized"</span>: <span class="hljs-literal">true</span>
     },
     <span class="hljs-attr">"tipo"</span>: <span class="hljs-string">""</span>
   },
   <span class="hljs-attr">"like"</span>: <span class="hljs-literal">false</span>,
   <span class="hljs-attr">"msg"</span>: [
-    <span class="hljs-string">"Ok, pero antes debo hacerte algunas preguntas. "</span>
+    <span class="hljs-string">"respuesta WEB"</span>
   ]
 }
 </code></pre>
@@ -1784,7 +1847,11 @@ p JSON.parse(result)
 <p>Bad Request</p>
 </blockquote>
 <pre class="highlight tab tab-json"><code>{
-  <span class="hljs-attr">"response"</span>: <span class="hljs-string">"Request con error. "</span>
+  <span class="hljs-attr">"estado"</span>: {
+    <span class="hljs-attr">"codigoEstado"</span>: <span class="hljs-number">400</span>,
+    <span class="hljs-attr">"glosaEstado"</span>: <span class="hljs-string">"Error en el tipo de dato canal"</span>
+  },
+  <span class="hljs-attr">"respuesta"</span>: <span class="hljs-literal">null</span>
 }
 </code></pre>
 <blockquote>
@@ -1906,7 +1973,7 @@ p JSON.parse(result)
 <tr>
 <td>»» cid</td>
 <td>string</td>
-<td>false</td>
+<td>true</td>
 <td>none</td>
 <td>none</td>
 </tr>
@@ -1932,13 +1999,6 @@ p JSON.parse(result)
 <td>none</td>
 </tr>
 <tr>
-<td>»»»» En otras cosas</td>
-<td>object</td>
-<td>false</td>
-<td>none</td>
-<td>none</td>
-</tr>
-<tr>
 <td>»»»» node_id_number</td>
 <td>object</td>
 <td>false</td>
@@ -1948,20 +2008,6 @@ p JSON.parse(result)
 <tr>
 <td>»»»» response_id_number</td>
 <td>object</td>
-<td>false</td>
-<td>none</td>
-<td>none</td>
-</tr>
-<tr>
-<td>»»» branch_exited</td>
-<td>boolean</td>
-<td>false</td>
-<td>none</td>
-<td>none</td>
-</tr>
-<tr>
-<td>»»» branch_exited_reason</td>
-<td>string</td>
 <td>false</td>
 <td>none</td>
 <td>none</td>
@@ -2011,6 +2057,27 @@ p JSON.parse(result)
 <tr>
 <td>»» msg</td>
 <td>[string]</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>»» buttons</td>
+<td>[object]</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>»»» title</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>»»» value</td>
+<td>string</td>
 <td>false</td>
 <td>none</td>
 <td>none</td>
